@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//This is really awful code I wrote when I didn't know better
+//I'm so sorry
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
