@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6255148099270242442}
   - component: {fileID: 6255148099270242443}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GoblinGfx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,9 +94,9 @@ GameObject:
   - component: {fileID: 6255148099485607344}
   - component: {fileID: 6255148099485607350}
   - component: {fileID: 6255148099485607346}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GoblinContainer
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,8 +133,8 @@ MonoBehaviour:
   detailedGizmos: 0
   startEndModifier:
     addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
+    exactStartPoint: 0
+    exactEndPoint: 0
     useRaycasting: 0
     mask:
       serializedVersion: 2
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   speed: 500
-  nextWaypointDistance: 3
+  nextWaypointDistance: 0.5
   recalculateTiming: 0.5
   EnemyGfx: {fileID: 6255148099270242442}
   spriteStretchX: 7

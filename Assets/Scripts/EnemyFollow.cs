@@ -22,7 +22,7 @@ public class EnemyFollow : MonoBehaviour
     Transform target;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {   
         if(Player == null)
         {
@@ -31,7 +31,6 @@ public class EnemyFollow : MonoBehaviour
         target = Player.GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
-
         InvokeRepeating("UpdatePath", 0f, recalculateTiming);
     }
 
@@ -67,7 +66,7 @@ public class EnemyFollow : MonoBehaviour
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
         rb.AddForce(force);
-
+        Debug.DrawRay(transform.position, force, Color.red);
         //add rotation for emphasis
 
         EnemyGfx.rotation = Quaternion.Euler(rb.velocity.x * spriteStretchX, rb.velocity.y * spriteStretchY, -rb.velocity.x);

@@ -29,10 +29,17 @@ public class Astar_Generate_GridGraph : MonoBehaviour
         GridGraph gg = data.AddGraph(typeof(GridGraph)) as GridGraph;
         var gc = new GraphCollision();
         gc.use2D = true;
+        
+        /*var layer1 = LayerMask.NameToLayer("Environment");
+        var layer2 = LayerMask.NameToLayer("Enemy");
+        var mask1 = 1 << layer1;
+        var mask2 = 1 << layer2;
+        var combinedMask = mask1 | mask2;*/
         gc.mask = LayerMask.GetMask("Environment");
+        gc.diameter = tileSize;
         gg.collision = gc;
-        gg.SetDimensions(size.x * 2, size.y * 2, tileSize/2);
-        gg.center = cent + new Vector3(tileSize/4, tileSize/4, 0);
+        gg.SetDimensions(size.x, size.y, tileSize);
+        gg.center = cent;
         gg.rotation = new Vector3(gg.rotation.y - 90, 270, 90);
         StartCoroutine(ScanMap());
     }
