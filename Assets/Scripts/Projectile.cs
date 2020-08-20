@@ -12,8 +12,6 @@ public class Projectile : MonoBehaviour
     {
         shotDirection = transform.rotation * Vector2.right;
         rb2d = GetComponent<Rigidbody2D>();
-        var frc = shotDirection * moveSpeed;
-        Debug.Log(frc);
         rb2d.AddForce(shotDirection * moveSpeed, ForceMode2D.Impulse);
     }
 

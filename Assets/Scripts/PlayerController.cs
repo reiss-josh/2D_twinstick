@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         xMove = Input.GetAxis("Horizontal");
         yMove = Input.GetAxis("Vertical");
         shootButton = Input.GetButtonDown("Fire1");
+        if (Input.GetButtonDown("Quit")) Application.Quit();
     }
 
     bool SameSign(float num1, float num2) {
