@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1360533182034822219
+--- !u!1 &2963760398474402620
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,8 +8,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1360533182034822216}
-  - component: {fileID: 1360533182034822217}
+  - component: {fileID: 2963760398474402618}
+  - component: {fileID: 2963760398474402621}
   m_Layer: 0
   m_Name: GoblinSpawner
   m_TagString: Untagged
@@ -17,13 +17,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1360533182034822216
+--- !u!4 &2963760398474402618
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360533182034822219}
+  m_GameObject: {fileID: 2963760398474402620}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.6928089, y: 1.070733, z: -193.23242}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,13 +31,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1360533182034822217
+--- !u!114 &2963760398474402621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360533182034822219}
+  m_GameObject: {fileID: 2963760398474402620}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4aa4e09883e330948b815ad1acee4e9a, type: 3}
@@ -45,4 +45,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Goblin: {fileID: 6255148099485607340, guid: 1d0bc3b1a5111b648831ce347cb49fb1, type: 3}
   Player: {fileID: 0}
-  numGoblins: 10
+  numGoblins: 25
