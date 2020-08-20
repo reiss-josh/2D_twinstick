@@ -200,3 +200,6 @@ MonoBehaviour:
   EnemyGfx: {fileID: 6255148099270242442}
   spriteStretchX: 7
   spriteStretchY: 5
+  damageAmt: 5
+  reboundForce: 200
+  iFrameTime: 1

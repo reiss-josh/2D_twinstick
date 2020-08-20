@@ -13,7 +13,8 @@ public class BasicGoblinSpawner : MonoBehaviour
         Vector3 loc = Player.transform.position;
         for(int i = 0; i < numGoblins; i++)
         {
-            Instantiate(Goblin, loc, Quaternion.Euler(Vector3.up)); 
+            var newGob = Instantiate(Goblin, loc, Quaternion.Euler(Vector3.up));
+            newGob.transform.parent = gameObject.transform;
         }
     }
 }

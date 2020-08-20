@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class EnemyFollow : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public GameObject Player;
     public float speed = 200f;
@@ -12,10 +12,13 @@ public class EnemyFollow : MonoBehaviour
     public Transform EnemyGfx;
     public float spriteStretchX = 10f;
     public float spriteStretchY = 10f;
+    public int damageAmt = 5;
+    public float reboundForce = 100f;
+    public float iFrameTime = 1f;
+    private float iFrameCounter = 0;
 
     Path path;
     int currentWaypoint = 0;
-    bool reachedEndOfPath = false;
 
     Seeker seeker;
     Rigidbody2D rb;
@@ -51,22 +54,22 @@ public class EnemyFollow : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (iFrameCounter > 0) iFrameCounter -= Time.deltaTime;
+        if (iFrameCounter < 0) iFrameCounter = 0;
         if (path == null)
             return;
 
         //check if at end of path
         if(currentWaypoint >= path.vectorPath.Count)
         {
-            reachedEndOfPath = true;
             return;
         }
-        else reachedEndOfPath = false;
 
         //calculate vector heading towards target, then move towards it
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
         rb.AddForce(force);
-        Debug.DrawRay(transform.position, force, Color.red);
+        //Debug.DrawRay(transform.position, force, Color.red);
         //add rotation for emphasis
 
         EnemyGfx.rotation = Quaternion.Euler(rb.velocity.x * spriteStretchX, rb.velocity.y * spriteStretchY, -rb.velocity.x);
@@ -75,5 +78,15 @@ public class EnemyFollow : MonoBehaviour
         //determine distance to nextwaypoint. if it has been reached, note that.
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
         if (distance < nextWaypointDistance) currentWaypoint++;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            var dir = (collision.transform.position - transform.position).normalized;
+            var force = dir * -reboundForce;
+            rb.AddForce(force);
+        }
     }
 }

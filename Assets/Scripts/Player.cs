@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    public float xMove, yMove;
-    public float moveSpeed = 5f;
+    private float xMove, yMove;
+    public float moveSpeed = 150f;
+    public float reboundForce = 1500f;
+    public float iFrameTime = 1f;
+    private float iFrameCounter = 0;
     private Rigidbody2D rb2d;
+    public int health = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +22,13 @@ public class PlayerMove : MonoBehaviour
     void Update()
     {
         GetInput();
+    }
+
+    void FixedUpdate()
+    {
         PerfMove();
+        if (iFrameCounter > 0) iFrameCounter-=Time.deltaTime;
+        if (iFrameCounter < 0) iFrameCounter = 0;
     }
 
     void GetInput()
@@ -32,6 +42,17 @@ public class PlayerMove : MonoBehaviour
         var moveVector = new Vector2(xMove, yMove) * moveSpeed;
         rb2d.AddForce(moveVector);
     }
-
-
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if((collision.gameObject.tag == "Enemy") && (iFrameCounter <= 0))
+        {
+            health -= collision.gameObject.GetComponent<Enemy>().damageAmt;
+            var dir = (collision.transform.position - transform.position).normalized;
+            var force = dir * -reboundForce;
+            //Debug.DrawRay(transform.position, force, Color.red, 1f);
+            rb2d.AddForce(force);
+            iFrameCounter = iFrameTime;
+        }
+    }
 }

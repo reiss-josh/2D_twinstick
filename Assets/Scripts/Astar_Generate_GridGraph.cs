@@ -13,7 +13,8 @@ public class Astar_Generate_GridGraph : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        gameObject.AddComponent<AstarPath>();
+        AstarPath pth = gameObject.AddComponent<AstarPath>();
+        pth.logPathResults = PathLog.OnlyErrors;
         wallMap = mapHolder.GetComponent<Tilemap>();
         coll = mapHolder.GetComponent<TilemapCollider2D>();
     }
