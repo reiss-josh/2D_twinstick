@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (health <= 0) Destroy(gameObject); //death
+        if (health <= 0) Application.Quit(); //death
         GetInput();
         if (shootButton && shootEvent != null) shootEvent(aimTf.GetChild(0).position, aimTf.rotation);
     }
