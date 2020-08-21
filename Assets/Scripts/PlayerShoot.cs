@@ -19,8 +19,7 @@ public class PlayerShoot : MonoBehaviour
     public void Shoot(Vector3 arrowPos, Quaternion arrowAngle)
     {
         //Debug.Log(arrowPos);
-        float pitch = Random.Range(0.5f, 1.5f);
-        audioSource.pitch = pitch;
+        audioSource.pitch = Random.Range(0.5f, 1.5f);
         audioSource.PlayOneShot(shootSound, volume);
         Instantiate(Arrow, arrowPos, arrowAngle);
     }

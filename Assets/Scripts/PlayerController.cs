@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     private float xMove, yMove;
     private bool shootButton;
     public float moveSpeed = 150f, speedCap = 10f, reboundForce = 1500f, frictionAmt = 0.2f;
-    public int health = 100;
+    public int health = 20;
 
     public float iFrameTime = 1f;
     private float iFrameCounter = 0;
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0) Destroy(gameObject); //death
         GetInput();
         if (shootButton && shootEvent != null) shootEvent(aimTf.GetChild(0).position, aimTf.rotation);
     }
