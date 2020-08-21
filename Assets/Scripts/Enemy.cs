@@ -6,20 +6,22 @@ using Pathfinding;
 public class Enemy : MonoBehaviour
 {
     public GameObject Player;
-    public float speed = 200f;
+    public Transform EnemyGfx;
+
+    public float speed = 200f, reboundForce = 100f;
     public float nextWaypointDistance = 3f;
     public float recalculateTiming = 0.5f;
-    public Transform EnemyGfx;
-    public float spriteStretchX = 10f;
-    public float spriteStretchY = 10f;
-    public int damageAmt = 5;
-    public float reboundForce = 100f;
+    
+    public float spriteStretchX = 10f, spriteStretchY = 10f;
+    public int damageAmt = 5, health = 100;
+
     public float iFrameTime = 1f;
     private float iFrameCounter = 0;
 
     Path path;
     int currentWaypoint = 0;
 
+    SpriteRenderer Sprite;
     Seeker seeker;
     Rigidbody2D rb;
     Transform target;
@@ -34,6 +36,7 @@ public class Enemy : MonoBehaviour
         target = Player.GetComponent<Transform>();
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
+        Sprite = GetComponentInChildren<SpriteRenderer>();
         InvokeRepeating("UpdatePath", 0f, recalculateTiming);
     }
 
@@ -50,6 +53,29 @@ public class Enemy : MonoBehaviour
             path = p;
             currentWaypoint = 0;
         }
+    }
+
+    void Death()
+    {
+        Destroy(gameObject);
+    }
+
+    public IEnumerator FlashColor(Color color, int numFlashes, float flashTime)
+    {
+        for (int i = 0; i < numFlashes; i++)
+        {
+            Sprite.color = (color);
+            yield return new WaitForSeconds(flashTime);
+            Sprite.color = (Color.white);
+            yield return new WaitForSeconds(flashTime);
+        }
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        if (health < 0) Death();
+        StartCoroutine(FlashColor(Color.red, 3, 0.1f));
     }
 
     void FixedUpdate()
@@ -69,9 +95,8 @@ public class Enemy : MonoBehaviour
         Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
         Vector2 force = direction * speed * Time.deltaTime;
         rb.AddForce(force);
-        //Debug.DrawRay(transform.position, force, Color.red);
-        //add rotation for emphasis
 
+        //add rotation for emphasis
         EnemyGfx.rotation = Quaternion.Euler(rb.velocity.x * spriteStretchX, rb.velocity.y * spriteStretchY, -rb.velocity.x);
         
 
@@ -87,6 +112,10 @@ public class Enemy : MonoBehaviour
             var dir = (collision.transform.position - transform.position).normalized;
             var force = dir * -reboundForce;
             rb.AddForce(force);
+        }
+        if (collision.gameObject.tag == "Projectile")
+        {
+            TakeDamage(collision.gameObject.GetComponent<Projectile>().damageAmt);
         }
     }
 }
