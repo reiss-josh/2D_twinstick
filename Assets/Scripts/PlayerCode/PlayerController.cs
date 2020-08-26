@@ -30,22 +30,25 @@ public class PlayerController : MonoBehaviour
     {
         if (health <= 0) Application.Quit(); //death
         GetInput();
+        iFrameUpdate();
         if (shootButton && shootEvent != null) shootEvent(aimTf.GetChild(0).position, aimTf.rotation);
     }
 
+    // FixedUpdate is called when the Physics System updates
     void FixedUpdate()
     {
         PerfMove();
         PerfFriction();
-        iFrameUpdate();
     }
 
+    //should make this a coroutine
     void iFrameUpdate()
     {
         if (iFrameCounter > 0) iFrameCounter -= Time.deltaTime;
         if (iFrameCounter < 0) iFrameCounter = 0;
     }
 
+    //should probably make this its own script
     void GetInput()
     {
         xMove = Input.GetAxis("Horizontal");
@@ -54,6 +57,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Quit")) Application.Quit();
     }
 
+    //should push this out to some kind of utilities script
     bool SameSign(float num1, float num2) {
         if (num1 > 0 && num2 < 0)
             return false;

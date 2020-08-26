@@ -7,6 +7,7 @@ public class BasicGoblinSpawner : MonoBehaviour
     public GameObject Goblin;
     public GameObject Player;
     public int numGoblins;
+
     // Start is called before the first frame update
     void Start()
     {

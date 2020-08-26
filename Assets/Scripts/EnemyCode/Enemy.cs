@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {   
+        //should replace this with some method that determines a list of targets
         if(Player == null)
         {
             Player = GameObject.Find("Player");
@@ -54,11 +55,50 @@ public class Enemy : MonoBehaviour
         InvokeRepeating("UpdatePath", 0f, recalculateTiming);
     }
 
+    void Update()
+    {
+        if (dead) return;
+
+        if (iFrameCounter > 0) iFrameCounter -= Time.deltaTime;
+        if (iFrameCounter < 0) iFrameCounter = 0;
+        if (path == null)
+            return;
+
+        //check if at end of path
+        if (currentWaypoint >= path.vectorPath.Count)
+        {
+            return;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (dead) return;
+        if (path == null) return;
+        if (currentWaypoint >= path.vectorPath.Count) return;
+
+        //calculate vector heading towards target, then move towards it
+        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
+        Vector2 force = direction * speed * Time.deltaTime;
+        rb.AddForce(force);
+
+        //add rotation for emphasis
+        EnemyGfx.rotation = Quaternion.Euler(rb.velocity.x * spriteStretchX, rb.velocity.y * spriteStretchY, -rb.velocity.x);
+
+        //determine distance to nextwaypoint. if it has been reached, note that.
+        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
+        if (distance < nextWaypointDistance) currentWaypoint++;
+    }
+
+    //
     void UpdatePath()
     {
         if (dead) return;
         if (seeker.IsDone())
-            {seeker.StartPath(rb.position, target.position, OnPathComplete);}
+        {
+            //need to make this search through a set of targets and determine the closest one
+            seeker.StartPath(rb.position, target.position, OnPathComplete);
+        }
     }
 
     void OnPathComplete(Path p)
@@ -70,19 +110,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Death()
-    {
-        //play death sound and animation
-        audioSource.pitch = 1f;
-        audioSource.PlayOneShot(deathSound, volume);
-        anim.SetBool("isDead", true);
-
-        //make sure we stop doing things
-        dead = true;
-        Destroy(rb);
-        Destroy(coll);
-    }
-
+    //should probably push this out to a utilities file
     public IEnumerator FlashColor(Color color, int numFlashes, float flashTime)
     {
         for (int i = 0; i < numFlashes; i++)
@@ -108,33 +136,17 @@ public class Enemy : MonoBehaviour
         StartCoroutine(FlashColor(damageColor, 3, 0.1f));
     }
 
-    void FixedUpdate()
+    void Death()
     {
-        if (dead) return;
+        //play death sound and animation
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(deathSound, volume);
+        anim.SetBool("isDead", true);
 
-        if (iFrameCounter > 0) iFrameCounter -= Time.deltaTime;
-        if (iFrameCounter < 0) iFrameCounter = 0;
-        if (path == null)
-            return;
-
-        //check if at end of path
-        if(currentWaypoint >= path.vectorPath.Count)
-        {
-            return;
-        }
-
-        //calculate vector heading towards target, then move towards it
-        Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-        Vector2 force = direction * speed * Time.deltaTime;
-        rb.AddForce(force);
-
-        //add rotation for emphasis
-        EnemyGfx.rotation = Quaternion.Euler(rb.velocity.x * spriteStretchX, rb.velocity.y * spriteStretchY, -rb.velocity.x);
-        
-
-        //determine distance to nextwaypoint. if it has been reached, note that.
-        float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-        if (distance < nextWaypointDistance) currentWaypoint++;
+        //make sure we stop doing things
+        dead = true;
+        Destroy(rb);
+        Destroy(coll);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

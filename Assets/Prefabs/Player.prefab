@@ -237,8 +237,8 @@ GameObject:
   - component: {fileID: 2643320442246685706}
   - component: {fileID: 2643320442246685702}
   - component: {fileID: 2643320442246685703}
-  - component: {fileID: 2643320442246685700}
   - component: {fileID: 2643320442246685701}
+  - component: {fileID: 2643320442246685700}
   - component: {fileID: 2643320442246685707}
   m_Layer: 9
   m_Name: Player
@@ -280,7 +280,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2222b47f07f67194282a82e0f51a44df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -334,6 +334,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &2643320442246685701
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2643320442246685704}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 770af092f9d90684f80e8870918ea8a7, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.039
 --- !u!114 &2643320442246685700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,22 +368,6 @@ MonoBehaviour:
   frictionAmt: 3000
   health: 20
   iFrameTime: 1
---- !u!58 &2643320442246685701
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2643320442246685704}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 770af092f9d90684f80e8870918ea8a7, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.039
 --- !u!114 &2643320442246685707
 MonoBehaviour:
   m_ObjectHideFlags: 0
