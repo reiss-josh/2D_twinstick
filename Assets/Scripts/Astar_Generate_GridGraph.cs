@@ -37,7 +37,7 @@ public class Astar_Generate_GridGraph : MonoBehaviour
         var mask2 = 1 << layer2;
         var combinedMask = mask1 | mask2;*/
         gc.mask = LayerMask.GetMask("Environment");
-        gc.diameter = tileSize-0.2f;
+        gc.diameter = tileSize/2f;
         gg.collision = gc;
         gg.SetDimensions(size.x, size.y, tileSize);
         gg.center = cent;
