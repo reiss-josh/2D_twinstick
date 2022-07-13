@@ -1,2 +1,2 @@
 # 2D_twinstick
-an extremely rudimentary experiment in Unity 2D
+experiment with lighting and 2d rendering in unity
